@@ -21,13 +21,13 @@ def dashboard():
         return flask.render_template("dashboard.html")
 
 def pkgDeploy(pkg):
-    os.system("sudo apt install " + pkg)
+    os.system("sudo apt install -y " + pkg)
 
 @app.route("/piapi/deploy/pkg/")
 def apiDeployPkg():
     package = flask.request.args.get('pkg')
     thcmd = threading.Thread(target=pkgDeploy, args=(package))    
     thcmd.start()
-    return flask.redirect("/main/dashboard")
+    return flask.redirect("/main/dashboard?password=admin")
 
 app.run()
